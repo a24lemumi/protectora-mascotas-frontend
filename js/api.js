@@ -41,7 +41,7 @@ async function apiRequest(endpoint, options = {}) {
 
 const API = {
     login(credentials) {
-        return apiRequest('/api/login', {
+        return apiRequest('/api/auth/login', {
             method: 'POST',
             body: JSON.stringify(credentials)
         });
@@ -53,12 +53,11 @@ const API = {
         });
     },
     getPets() {
-        return apiRequest('/api/pets');
+        return apiRequest('/api/mascotas');
     },
     adoptPet(petId) {
-        return apiRequest(`/api/adoptions`, {
-            method: 'POST',
-            body: JSON.stringify({ pet_id: petId })
+        return apiRequest(`/api/mascotas/${petId}/adoptar`, {
+            method: 'POST'
         });
     },
     logout() {
