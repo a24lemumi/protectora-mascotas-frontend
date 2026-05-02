@@ -165,7 +165,7 @@ function setupRegisterForm() {
         message.innerHTML = '';
 
         try {
-            await API.register({ name: name.value, email: email.value, password: password.value });
+            await API.register({ username: name.value, email: email.value, password: password.value });
             message.innerHTML = '<div class="form-message success">¡Registro exitoso! Redirigiendo al login...</div>';
             setTimeout(() => navigateTo('#login'), 1500);
         } catch (err) {
@@ -178,12 +178,12 @@ function setupRegisterForm() {
 function createPetCard(pet) {
     return `
         <article class="pet-card" data-pet-id="${pet.id}">
-            <img src="${pet.image || 'https://via.placeholder.com/300x250?text=Sin+imagen'}" alt="Foto de ${pet.name}">
+            <img src="${pet.imagen || 'https://via.placeholder.com/300x250?text=Sin+imagen'}" alt="Foto de ${pet.nombre}">
             <div class="pet-info">
-                <h3>${pet.name}</h3>
-                <p><strong>Especie:</strong> ${pet.species}</p>
-                <p>${pet.description || 'Sin descripción'}</p>
-                <button class="btn adopt-btn" data-id="${pet.id}" aria-label="Adoptar a ${pet.name}">Adoptar</button>
+                <h3>${pet.nombre}</h3>
+                <p><strong>Especie:</strong> ${pet.especie}</p>
+                <p>${pet.descripcion || 'Sin descripción'}</p>
+                <button class="btn adopt-btn" data-id="${pet.id}" aria-label="Adoptar a ${pet.nombre}">Adoptar</button>
             </div>
         </article>
     `;
@@ -192,11 +192,11 @@ function createPetCard(pet) {
 function createPetCardScrollSnap(pet) {
     return `
         <article class="pet-card" data-pet-id="${pet.id}" style="min-width: 300px;">
-            <img src="${pet.image || 'https://via.placeholder.com/300x250?text=Sin+imagen'}" alt="Foto de ${pet.name}">
+            <img src="${pet.imagen || 'https://via.placeholder.com/300x250?text=Sin+imagen'}" alt="Foto de ${pet.nombre}">
             <div class="pet-info">
-                <h3>${pet.name}</h3>
-                <p><strong>Especie:</strong> ${pet.species}</p>
-                <button class="btn adopt-btn" data-id="${pet.id}" aria-label="Adoptar a ${pet.name}">Adoptar</button>
+                <h3>${pet.nombre}</h3>
+                <p><strong>Especie:</strong> ${pet.especie}</p>
+                <button class="btn adopt-btn" data-id="${pet.id}" aria-label="Adoptar a ${pet.nombre}">Adoptar</button>
             </div>
         </article>
     `;
