@@ -2,31 +2,37 @@
 const $ = sel => document.querySelector(sel);
 const store = {
   user: null, theme: localStorage.getItem('theme') || 'light',
-  setTheme(t) { this.theme = t; document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); $('#theme-toggle').textContent = t === 'dark' ? '☀️' : '🌙'; },
+  setTheme(t) {
+    this.theme = t;
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('theme', t);
+    const toggle = $('#theme-toggle');
+    if (toggle) toggle.innerHTML = createIcon(t === 'dark' ? 'sun' : 'moon', 18);
+  },
   setUser(u) { this.user = u; $('[data-state]').dataset.state = u ? 'logged-in' : 'logged-out'; }
 };
 
 const routes = {
   '': () => { $('#app-main').innerHTML = `<section class="home-hero"><h2>Encuentra tu compañero ideal</h2><p>Adopta, no compres.</p><button class="btn" data-action="navigate" data-target="#catalog">Ver Catálogo</button></section>`; },
   '#home': () => routes[''](),
-    '#login': () => {
-        routes['']();
-        $('#app-main').innerHTML = `<section class="glass-card" style="max-width:400px;margin:2rem auto;"><h2>Iniciar Sesión</h2><div id="login-message" aria-live="polite"></div><form id="login-form"><div class="form-group"><label for="login-email">Email</label><input type="email" id="login-email" required aria-label="Email"></div><div class="form-group"><label for="login-password">Contraseña</label><input type="password" id="login-password" required aria-label="Contraseña"></div><button type="submit" class="btn" style="width:100%;">Entrar</button></form><p style="margin-top:1rem;text-align:center;">¿No tienes cuenta? <a href="#register" style="color:var(--accent);">Regístrate</a></p></section>`;
-        setupForm('login', API.login, res => { 
-            TokenManager.setToken(res.token); 
-            store.setUser(res.user || {}); 
-            setTimeout(() => location.hash = '#catalog', 1000); 
-        });
-    },
+  '#login': () => {
+      $('#app-main').innerHTML = `<section class="glass-card" style="max-width:400px;margin:2rem auto;"><h2>Iniciar Sesión</h2><div id="login-message" aria-live="polite"></div><form id="login-form"><div class="form-group"><label for="login-email">Email</label><input type="email" id="login-email" required aria-label="Email"></div><div class="form-group"><label for="login-password">Contraseña</label><input type="password" id="login-password" required aria-label="Contraseña"></div><button type="submit" class="btn" style="width:100%;">Entrar</button></form><p style="margin-top:1rem;text-align:center;">¿No tienes cuenta? <a href="#register" style="color:var(--accent);">Regístrate</a></p></section>`;
+      setupForm('login', API.login, res => { 
+          TokenManager.setToken(res.token); 
+          store.setUser(res.user || {}); 
+          setTimeout(() => location.hash = '#catalog', 1000); 
+      });
+      store.setTheme(store.theme);
+  },
   '#register': () => {
     $('#app-main').innerHTML = `<section class="glass-card" style="max-width:400px;margin:2rem auto;"><h2>Registro</h2><div id="register-message" aria-live="polite"></div><form id="register-form"><div class="form-group"><label for="reg-name">Nombre</label><input type="text" id="reg-name" required aria-label="Nombre"></div><div class="form-group"><label for="reg-email">Email</label><input type="email" id="reg-email" required aria-label="Email"></div><div class="form-group"><label for="reg-password">Contraseña</label><input type="password" id="reg-password" required aria-label="Contraseña"></div><button type="submit" class="btn" style="width:100%;">Registrarse</button></form><p style="margin-top:1rem;text-align:center;">¿Ya tienes cuenta? <a href="#login" style="color:var(--accent);">Inicia sesión</a></p></section>`;
     setupForm('register', API.register, () => setTimeout(() => location.hash = '#login', 1500));
+    store.setTheme(store.theme);
   },
   '#catalog': () => {
-    $('#app-main').innerHTML = `<section><h2>Mascotas Destacadas</h2><div id="featured-pets" class="scroll-snap-container" style="margin-bottom:3rem;"><div class="loading">Cargando...</div></div><h2>Catálogo Completo</h2><div id="pet-grid" class="pet-grid"><div class="loading">Cargando mascotas...</div></div></section>`;
+    $('#app-main').innerHTML = `<section><h2>Catálogo de Mascotas</h2><div id="pet-grid" class="pet-grid"><div class="loading">Cargando mascotas...</div></div></section>`;
     if (!TokenManager.getToken()) {
       $('#pet-grid').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-secondary);">Inicia sesión para ver el catálogo.</p>';
-      $('#featured-pets').innerHTML = '';
       return;
     }
     loadPets();
@@ -58,23 +64,20 @@ function setupForm(type, apiMethod, successCallback) {
 
 function renderPet(pet, { isScrollSnap = false } = {}) {
   const style = isScrollSnap ? 'style="min-width:300px;"' : '';
-  return `<article class="pet-card" data-pet-id="${pet.id}" ${style}><img src="${pet.imagen || 'https://via.placeholder.com/300x250?text=Sin+imagen'}" alt="Foto de ${pet.nombre}"><div class="pet-info"><h3>${pet.nombre}</h3><p><strong>Especie:</strong> ${pet.especie}</p>${!isScrollSnap ? `<p>${pet.raza || 'Sin raza'}</p>` : ''}<button class="btn adopt-btn" data-action="adopt" data-id="${pet.id}" aria-label="Adoptar a ${pet.nombre}">Adoptar</button></div></article>`;
+  return `<article class="pet-card" data-pet-id="${pet.id}" ${style}><div class="pet-card-image"><img src="${pet.imagen || 'https://via.placeholder.com/300x400?text=Sin+imagen'}" alt="Foto de ${pet.nombre}"></div><div class="pet-info"><h3>${pet.nombre}</h3><p><strong>Especie:</strong> ${pet.especie}</p>${!isScrollSnap ? `<p>${pet.raza || 'Sin raza'}</p>` : ''}<button class="btn adopt-btn" data-action="adopt" data-id="${pet.id}" aria-label="Adoptar a ${pet.nombre}">Adoptar</button></div></article>`;
 }
 
 async function loadPets() {
   const grid = $('#pet-grid');
-  const featured = $('#featured-pets');
   if (!grid) return;
   try {
     const response = await API.getPets();
     const pets = Array.isArray(response) ? response : (response.data || response.pets || []);
     if (!pets || pets.length === 0) {
       grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-secondary);">No hay mascotas.</p>';
-      if (featured) featured.innerHTML = '<p style="color:var(--text-secondary);">No hay destacadas.</p>';
       return;
     }
     grid.innerHTML = pets.map(p => renderPet(p)).join('');
-    if (featured) featured.innerHTML = pets.slice(0, 5).map(p => renderPet(p, { isScrollSnap: true })).join('');
     if ('IntersectionObserver' in window && !CSS.supports('animation-timeline', 'view()')) {
       const observer = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')), { threshold: 0.1 });
       document.querySelectorAll('.pet-card').forEach(card => observer.observe(card));
