@@ -12,13 +12,17 @@ async function apiRequest(endpoint, options = {}) {
     const token = TokenManager.getToken();
     if (token) headers['Authorization'] = `Bearer ${token}`;
     const config = { ...options, headers };
-    const response = await fetch(url, config);
-    if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: 'Error desconocido' }));
-        throw new Error(errorData.message || `Error ${response.status}`);
+    try {
+        const response = await fetch(url, config);
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ message: 'Error desconocido' }));
+            throw new Error(errorData.error?.message || errorData.message || `Error ${response.status}`);
+        }
+        const data = await response.json();
+        return data.data || data;
+    } catch (error) {
+        throw error;
     }
-    const data = await response.json();
-    return data.data || data;
 }
 
 const API = {
