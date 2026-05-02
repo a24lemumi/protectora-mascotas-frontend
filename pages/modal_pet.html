@@ -1,0 +1,34 @@
+<div class="modal-content">
+  <h3 id="modal-title">Registrar Mascota</h3>
+  <div id="modal-message"></div>
+  <form id="pet-form">
+    <div class="form-group">
+      <label for="pet-nombre">Nombre</label>
+      <input type="text" id="pet-nombre" name="nombre" required placeholder="Nombre de la mascota">
+    </div>
+    <div class="form-group">
+      <label for="pet-especie">Especie</label>
+      <select id="pet-especie" name="especie" required class="form-select">
+        <option value="">Seleccionar...</option>
+        <option value="perro">Perro</option>
+        <option value="gato">Gato</option>
+        <option value="ave">Ave</option>
+        <option value="conejo">Conejo</option>
+        <option value="otro">Otro</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="pet-raza">Raza</label>
+      <input type="text" id="pet-raza" name="raza" placeholder="Raza (opcional)">
+    </div>
+    <div class="form-group">
+      <label for="pet-imagen">Imagen (URL)</label>
+      <input type="url" id="pet-imagen" name="imagen" placeholder="https://ejemplo.com/foto.jpg">
+    </div>
+    <input type="hidden" id="pet-id" name="id">
+    <div class="modal-actions">
+      <button type="submit" id="modal-submit-btn" class="btn btn-primary">Guardar</button>
+      <button type="button" class="btn btn-outline" data-action="close-modal">Cancelar</button>
+    </div>
+  </form>
+</div>

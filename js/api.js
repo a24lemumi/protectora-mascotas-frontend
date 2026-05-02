@@ -12,6 +12,7 @@ async function apiRequest(endpoint, options = {}) {
     const token = TokenManager.getToken();
     if (token) headers['Authorization'] = `Bearer ${token}`;
     const config = { ...options, headers };
+    
     try {
         const response = await fetch(url, config);
         if (!response.ok) {

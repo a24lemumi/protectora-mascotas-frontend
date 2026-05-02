@@ -16,6 +16,7 @@
     />
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/auth.css" />
+    <link rel="stylesheet" href="css/admin.css" />
   </head>
   <body>
     <header>
@@ -24,6 +25,7 @@
         <ul class="nav-links">
           <li><a href="#home">Inicio</a></li>
           <li><a href="#catalog">Catálogo</a></li>
+          <li class="admin-link"><a href="#admin">Panel Admin</a></li>
           <li class="login-btn">
             <a href="#login" class="btn btn-outline">Login</a>
           </li>
@@ -87,20 +89,7 @@
       <section id="view-auth" class="view"></section>
 
       <!-- Admin View -->
-      <section id="view-admin" class="view">
-        <div class="admin-header">
-          <h2>Panel de Gestión</h2>
-          <p>Administra el catálogo de mascotas disponibles para adopción.</p>
-        </div>
-        <button
-          class="btn btn-primary"
-          data-action="show-create-modal"
-          style="margin-bottom: 2rem"
-        >
-          + Nueva Mascota
-        </button>
-        <div id="admin-table-container"></div>
-      </section>
+      <section id="view-admin" class="view"></section>
     </main>
 
     <footer>
