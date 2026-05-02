@@ -9,10 +9,15 @@ const store = {
 const routes = {
   '': () => { $('#app-main').innerHTML = `<section class="home-hero"><h2>Encuentra tu compañero ideal</h2><p>Adopta, no compres.</p><button class="btn" data-action="navigate" data-target="#catalog">Ver Catálogo</button></section>`; },
   '#home': () => routes[''](),
-  '#login': () => {
-    $('#app-main').innerHTML = `<section class="glass-card" style="max-width:400px;margin:2rem auto;"><h2>Iniciar Sesión</h2><div id="login-message" aria-live="polite"></div><form id="login-form"><div class="form-group"><label for="login-email">Email</label><input type="email" id="login-email" required aria-label="Email"></div><div class="form-group"><label for="login-password">Contraseña</label><input type="password" id="login-password" required aria-label="Contraseña"></div><button type="submit" class="btn" style="width:100%;">Entrar</button></form><p style="margin-top:1rem;text-align:center;">¿No tienes cuenta? <a href="#register" style="color:var(--accent);">Regístrate</a></p></section>`;
-    setupForm('login', API.login, res => { store.setUser(res); setTimeout(() => location.hash = '#catalog', 1000); });
-  },
+    '#login': () => {
+        routes['']();
+        $('#app-main').innerHTML = `<section class="glass-card" style="max-width:400px;margin:2rem auto;"><h2>Iniciar Sesión</h2><div id="login-message" aria-live="polite"></div><form id="login-form"><div class="form-group"><label for="login-email">Email</label><input type="email" id="login-email" required aria-label="Email"></div><div class="form-group"><label for="login-password">Contraseña</label><input type="password" id="login-password" required aria-label="Contraseña"></div><button type="submit" class="btn" style="width:100%;">Entrar</button></form><p style="margin-top:1rem;text-align:center;">¿No tienes cuenta? <a href="#register" style="color:var(--accent);">Regístrate</a></p></section>`;
+        setupForm('login', API.login, res => { 
+            TokenManager.setToken(res.token); 
+            store.setUser(res.user || {}); 
+            setTimeout(() => location.hash = '#catalog', 1000); 
+        });
+    },
   '#register': () => {
     $('#app-main').innerHTML = `<section class="glass-card" style="max-width:400px;margin:2rem auto;"><h2>Registro</h2><div id="register-message" aria-live="polite"></div><form id="register-form"><div class="form-group"><label for="reg-name">Nombre</label><input type="text" id="reg-name" required aria-label="Nombre"></div><div class="form-group"><label for="reg-email">Email</label><input type="email" id="reg-email" required aria-label="Email"></div><div class="form-group"><label for="reg-password">Contraseña</label><input type="password" id="reg-password" required aria-label="Contraseña"></div><button type="submit" class="btn" style="width:100%;">Registrarse</button></form><p style="margin-top:1rem;text-align:center;">¿Ya tienes cuenta? <a href="#login" style="color:var(--accent);">Inicia sesión</a></p></section>`;
     setupForm('register', API.register, () => setTimeout(() => location.hash = '#login', 1500));
