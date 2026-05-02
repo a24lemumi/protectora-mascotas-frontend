@@ -29,6 +29,10 @@ const API = {
     login(credentials) { return apiRequest('/api/auth/login', { method: 'POST', body: JSON.stringify(credentials) }); },
     register(userData) { return apiRequest('/api/auth/register', { method: 'POST', body: JSON.stringify(userData) }); },
     getPets() { return apiRequest('/api/mascotas'); },
+    getPet(id) { return apiRequest(`/api/mascotas/${id}`); },
     adoptPet(petId) { return apiRequest(`/api/mascotas/${petId}/adoptar`, { method: 'POST' }); },
+    createPet(data) { return apiRequest('/api/mascotas', { method: 'POST', body: JSON.stringify(data) }); },
+    updatePet(id, data) { return apiRequest(`/api/mascotas/${id}`, { method: 'POST', body: JSON.stringify({ ...data, _method: 'PUT' }) }); },
+    deletePet(id) { return apiRequest(`/api/mascotas/${id}`, { method: 'POST', body: JSON.stringify({ _method: 'DELETE' }) }); },
     logout() { TokenManager.removeToken(); }
 };
