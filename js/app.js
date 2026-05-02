@@ -209,7 +209,7 @@ async function loadPets() {
 
     try {
         const response = await API.getPets();
-        const pets = response.data;
+        const pets = response.data.data;
 
         if (!pets || pets.length === 0) {
             grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">No hay mascotas disponibles en este momento.</p>';
