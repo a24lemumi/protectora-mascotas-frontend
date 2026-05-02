@@ -47,7 +47,7 @@ const API = {
         });
     },
     register(userData) {
-        return apiRequest('/api/register', {
+        return apiRequest('/api/auth/register', {
             method: 'POST',
             body: JSON.stringify(userData)
         });
