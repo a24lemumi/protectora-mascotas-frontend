@@ -53,17 +53,6 @@ protectora-mascotas-frontend/
 └── README.md           # Documentación técnica
 ```
 
-## Cumplimiento de Requisitos (DIW/DAW)
-
-Este proyecto ha sido desarrollado bajo los criterios de evaluación de **Jaime Rabasco Ronda**, cumpliendo con:
-
-- [x] Uso de etiquetas semánticas HTML5.
-- [x] Implementación obligatoria de **Container Queries**.
-- [x] **Scroll-driven Animations** (progresos de desplazamiento y visualización).
-- [x] Optimización **WPO** y **SEO**.
-- [x] Menú responsive funcional y estético.
-- [x] Puntuación óptima en **Lighthouse** (Rendimiento, Accesibilidad, Buenas Prácticas).
-
 ## Despliegue
 
 El frontend está optimizado para ser desplegado en **Vercel** o **Netlify**. Simplemente conecta el repositorio y asegúrate de que el directorio de salida sea la raíz del proyecto.
