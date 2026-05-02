@@ -139,8 +139,8 @@ function setupLoginForm() {
         message.innerHTML = '';
 
         try {
-            const data = await API.login({ email: email.value, password: password.value });
-            TokenManager.setToken(data.token);
+            const response = await API.login({ email: email.value, password: password.value });
+            TokenManager.setToken(response.data.token);
             message.innerHTML = '<div class="form-message success">¡Bienvenido! Redirigiendo...</div>';
             setTimeout(() => navigateTo('#catalog'), 1000);
         } catch (err) {
