@@ -208,9 +208,10 @@ async function loadPets() {
     if (!grid) return;
 
     try {
-        const pets = await API.getPets();
+        const response = await API.getPets();
+        const pets = response.data;
 
-        if (pets.length === 0) {
+        if (!pets || pets.length === 0) {
             grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">No hay mascotas disponibles en este momento.</p>';
             if (featured) featured.innerHTML = '<p style="color: var(--text-secondary);">No hay mascotas destacadas.</p>';
             return;
