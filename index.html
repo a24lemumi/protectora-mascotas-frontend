@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Protectora de Mascotas - Encuentra tu compañero ideal y dale un hogar. Adopta, no compres.">
+    <meta property="og:title" content="Protectora de Mascotas">
+    <meta property="og:description" content="Encuentra tu compañero ideal y dale un hogar. Adopta, no compres.">
+    <meta property="og:type" content="website">
+    <title>Protectora de Mascotas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header role="banner">
+        <nav role="navigation" aria-label="Navegación principal">
+            <div class="nav-brand">
+                <h1>🐾 Protectora</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" aria-label="Ir a inicio">Inicio</a></li>
+                <li><a href="#catalog" aria-label="Ver catálogo de mascotas">Catálogo</a></li>
+                <li><a href="#login" aria-label="Iniciar sesión">Login</a></li>
+                <li><a href="#register" aria-label="Registrarse">Registro</a></li>
+                <li><button id="theme-toggle" aria-label="Cambiar tema claro/oscuro" class="theme-btn">🌙</button></li>
+                <li><button id="logout-btn" aria-label="Cerrar sesión" class="logout-btn hidden">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="app-main" role="main" aria-live="polite">
+        <section id="content">
+            <p>Cargando...</p>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2026 Protectora de Mascotas. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/api.js" defer></script>
+    <script src="js/app.js" defer></script>
+</body>
+</html>
